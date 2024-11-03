@@ -11,6 +11,10 @@ public class LightController : MonoBehaviour
 
     private GameObject[] indicators = new GameObject[5]; // 0: 本燈, 1: 上, 2: 下, 3: 左, 4: 右
 
+    public Material newMaterial; // 新材質
+    public GameObject objectToActivate; // 要啟動的另一個物件
+    public GameObject objectToNotActivate; // 要啟動的另一個物件
+
 
     void Start()
     {
@@ -27,6 +31,24 @@ public class LightController : MonoBehaviour
     public void UpdateLight()
     {
         lightComponent.enabled = isOn;
+    }
+
+    public void GoodLight()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null && newMaterial != null)
+            {
+                renderer.material = newMaterial;
+            }
+
+            // 啟動另一個物件
+            if (objectToActivate != null)
+            {
+                objectToActivate.SetActive(true);
+                
+                Rigidbody rb = objectToNotActivate.GetComponent<Rigidbody>();
+                rb.AddForce(Vector3.up * 30f, ForceMode.Impulse);
+            }
     }
 
     public void ToggleAdjacentLights()
@@ -69,7 +91,7 @@ public class LightController : MonoBehaviour
 
     private void ShowIndicators()
     {
-        if(this.tag != "Interact")
+        if(this.tag != "Interact" && this.tag != "GoodLight")
         {
             indicators[0] = Instantiate(indicatorPrefab, transform.position + new Vector3(0,-0.99f,0), Quaternion.identity); // 本燈
             indicators[1] = Instantiate(indicatorPrefab, transform.position + (Vector3.forward*2) + new Vector3(0,-0.99f,0), Quaternion.identity); // 上

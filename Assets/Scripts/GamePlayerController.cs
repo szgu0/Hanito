@@ -26,6 +26,10 @@ public class GamePlayerController : MonoBehaviour
                 LightControllLastStep = 3;
                 ResetLights();
             }
+            else if(currentLight.tag == "GoodLight")
+            {
+                currentLight.GoodLight();
+            }
             else if(LightControllLastStep>0)
             {
                 currentLight.ToggleLight();
