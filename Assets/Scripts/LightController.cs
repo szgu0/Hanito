@@ -91,6 +91,7 @@ public class LightController : MonoBehaviour
 
     private void ShowIndicators()
     {
+        
         if(this.tag != "Interact" && this.tag != "GoodLight")
         {
             indicators[0] = Instantiate(indicatorPrefab, transform.position + new Vector3(0,-0.99f,0), Quaternion.identity); // 本燈
@@ -98,6 +99,11 @@ public class LightController : MonoBehaviour
             indicators[2] = Instantiate(indicatorPrefab, transform.position + (Vector3.back*2)+ new Vector3(0,-0.99f,0), Quaternion.identity); // 下
             indicators[3] = Instantiate(indicatorPrefab, transform.position + (Vector3.left*2)+ new Vector3(0,-0.99f,0), Quaternion.identity); // 左
             indicators[4] = Instantiate(indicatorPrefab, transform.position + (Vector3.right*2)+ new Vector3(0,-0.99f,0), Quaternion.identity); // 右
+        }
+        else if(this.tag == "GoodLight")
+        {
+            Debug.Log("s");
+            indicators[0] = Instantiate(indicatorPrefab, transform.position + new Vector3(0,0,0.05f), new Quaternion(0,0,0,1), transform); // 本燈
         }
     }
 
