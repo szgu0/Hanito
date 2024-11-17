@@ -18,6 +18,8 @@ namespace StarterAssets
 
         public ThirdPersonController thirdPersonController;
 
+        public DeerController deerController;
+
         void Start()
         {
             if (m_PlayerInput == null)
@@ -44,6 +46,12 @@ namespace StarterAssets
                 else if (currentLight.tag == "GoodLight")
                 {
                     currentLight.GoodLight();
+                    deerController.GoodLightOn();
+                }
+                else if (currentLight.tag == "BadLight")
+                {
+                    currentLight.BadLight();
+                    deerController.MoveToExtendedPoint();
                 }
                 else if (LightControllLastStep > 0)
                 {

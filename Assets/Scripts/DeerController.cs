@@ -17,8 +17,11 @@ namespace StarterAssets
         private Vector3 patrolTarget;
         private bool isChasing = false;
         private bool isEat = false;
+        private bool isW = false;
         public Transform EatTarget;
-public GameObject EatImage;
+        public GameObject EatImage;
+
+
 
 
         void Start()
@@ -30,8 +33,12 @@ public GameObject EatImage;
 
         public void GoodLightOn()
         {
+            
             StartChasing();
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             agent.SetDestination(player.position);
+            if(distanceToPlayer>10f)transform.position = player.position + new Vector3(-8f,0,0f);
+            Debug.Log(player.position + new Vector3(-8f,0,0f));
         }
 
         void Update()
@@ -40,7 +47,16 @@ public GameObject EatImage;
 
             if (!isEat)
             {
-                if (distanceToPlayer <= chaseRange) // 检测是否追玩家
+                if (isW)
+                {
+                    if (agent.remainingDistance < 0.5f)
+                    {
+                        StopChasing();
+                        SetRandomPatrolTarget();
+                        isW=false;
+                    }
+                }
+                else if (distanceToPlayer <= chaseRange) // 检测是否追玩家
                 {
                     StartChasing();
                     agent.SetDestination(player.position);
@@ -88,8 +104,22 @@ public GameObject EatImage;
                 agent.SetDestination(patrolTarget);
             }
         }
+        public void MoveToExtendedPoint()
+        {
+            // 计算玩家与鹿的相对方向向量
+            // Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 directionToPlayer =  new Vector3(0,0,1f);
 
-        void StartChasing()
+            // 延伸出目标点
+            Vector3 extendedPoint = transform.position + directionToPlayer * 35f;
+
+            // 设置 NavMeshAgent 移动到目标点
+            StartChasing();
+            agent.SetDestination(extendedPoint);
+            isW = true;
+        }
+
+        public void StartChasing()
         {
             isChasing = true;
             agent.speed = runSpeed;

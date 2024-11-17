@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - Interact
   - GoodLight
+  - BadLight
   layers:
   - Default
   - TransparentFX
