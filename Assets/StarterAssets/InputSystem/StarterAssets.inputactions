@@ -267,7 +267,7 @@
                     "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Good",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -276,6 +276,17 @@
                     "name": "",
                     "id": "3e858a98-71b0-4025-8f02-77b2c91d9c50",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Good",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be2aebb9-09c2-4b8e-bd57-0667feef07e8",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
