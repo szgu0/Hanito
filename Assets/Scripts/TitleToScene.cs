@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class TitleToScene : MonoBehaviour
 {
     public InputAction jumpAction; // 输入动作，用于检测 Jump
+    public int sceneNum;
 
     void Start()
     {
@@ -19,7 +20,7 @@ public class TitleToScene : MonoBehaviour
         if (jumpAction.triggered)
         {
             // 直接切换到下一个场景
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(sceneNum);
         }
     }
 

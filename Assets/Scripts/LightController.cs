@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+namespace StarterAssets
+{
 public class LightController : MonoBehaviour
 {
     public bool isOn; // 燈的狀態
@@ -117,4 +118,5 @@ public class LightController : MonoBehaviour
             }
         }
     }
+}
 }

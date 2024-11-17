@@ -859,6 +859,7 @@ MonoBehaviour:
       m_Action: Jump
       m_Flags: 0
     m_Flags: 0
+  sceneNum: 1
 --- !u!114 &1632063491
 MonoBehaviour:
   m_ObjectHideFlags: 0
