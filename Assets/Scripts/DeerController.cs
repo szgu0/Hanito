@@ -80,4 +80,10 @@ public class DeerController : MonoBehaviour
         agent.speed = walkSpeed;
         animator.SetBool("IsChasing", false); // 切换到行走动画
     }
+
+    void StartEating()
+    {
+        animator.SetTrigger("Eat"); // 切换到行走动画
+        agent.enabled = false;
+    }
 }
