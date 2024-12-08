@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Cinemachine;
+
 namespace StarterAssets
 {
     public class DeerController : MonoBehaviour
@@ -21,6 +23,16 @@ namespace StarterAssets
         public Transform EatTarget;
         public GameObject EatImage;
 
+        private bool firstTimehasing = true;
+
+        public CinemachineVirtualCamera virtualCamera; // 绑定你的虚拟摄像机
+        public float lerpDuration = 1.2f; // 移动时间
+
+        private bool isLerping = false;
+        private float elapsedTime = 0f;
+        private Vector3 startPosition;
+        private Transform originalFollow; // 保存原始的 Follow 对象
+
 
 
 
@@ -33,12 +45,25 @@ namespace StarterAssets
 
         public void GoodLightOn()
         {
-            
+
             StartChasing();
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             agent.SetDestination(player.position);
-            if(distanceToPlayer>10f)transform.position = player.position + new Vector3(-8f,0,0f);
-            Debug.Log(player.position + new Vector3(-8f,0,0f));
+            if (firstTimehasing)
+            {
+                agent.Warp(new Vector3(14.4f, 3.5f, -0.8f));
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+                firstTimehasing = false;
+                Debug.Log("船");
+                // 保存当前 Follow 对象并移除
+                originalFollow = virtualCamera.Follow;
+                virtualCamera.Follow = null;
+                startPosition = virtualCamera.transform.position;
+                isLerping = true;
+                elapsedTime = 0f;
+            }
+            else if (distanceToPlayer > 10f) agent.Warp(player.position + new Vector3(-8f, 0, 0f));
+            Debug.Log(player.position + new Vector3(-8f, 0, 0f));
         }
 
         void Update()
@@ -53,7 +78,7 @@ namespace StarterAssets
                     {
                         StopChasing();
                         SetRandomPatrolTarget();
-                        isW=false;
+                        isW = false;
                     }
                 }
                 else if (distanceToPlayer <= chaseRange) // 检测是否追玩家
@@ -73,6 +98,22 @@ namespace StarterAssets
                     {
                         SetRandomPatrolTarget();
                     }
+                }
+            }
+
+            if (isLerping)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / lerpDuration); // 计算插值时间
+
+                // Lerp 到目标位置
+                virtualCamera.transform.position = Vector3.Lerp(startPosition, transform.position + new Vector3(4, 5f, -10f), t);
+
+                if (t >= 1f) // 完成移动
+                {
+                    isLerping = false;
+                    elapsedTime = 0f;
+                    virtualCamera.Follow = originalFollow;
                 }
             }
         }
@@ -108,7 +149,7 @@ namespace StarterAssets
         {
             // 计算玩家与鹿的相对方向向量
             // Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Vector3 directionToPlayer =  new Vector3(0,0,1f);
+            Vector3 directionToPlayer = new Vector3(0, 0, 1f);
 
             // 延伸出目标点
             Vector3 extendedPoint = transform.position + directionToPlayer * 35f;
