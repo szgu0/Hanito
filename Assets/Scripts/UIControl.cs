@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+namespace StarterAssets
+{
 public class UIControl : MonoBehaviour
 {
+    public ThirdPersonController thirdPersonController;
     public Button[] buttons; // 將你的按鈕拖拽到這裡
     private int currentIndex = 0; // 當前選中按鈕的索引
 
@@ -16,6 +20,8 @@ public class UIControl : MonoBehaviour
     private bool NotRepeat;
 
     public GameObject Menu;
+
+    
 
     void Start()
     {
@@ -52,14 +58,7 @@ public class UIControl : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape) || m_EscAction.triggered)
         {
-            if(Menu.activeSelf)
-            {
-                Menu.SetActive(false);
-            }
-            else
-            {
-                Menu.SetActive(true);
-            }
+            Esc();
         }
     }
 
@@ -79,4 +78,25 @@ public class UIControl : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(buttons[index].gameObject);
     }
 
+    public void Restart()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void Esc()
+    {
+        
+        if(Menu.activeSelf)
+            {
+                Menu.SetActive(false);
+                thirdPersonController.enabled = true;
+            }
+            else
+            {
+                Menu.SetActive(true);
+                thirdPersonController.enabled = false;
+            }
+    }
+
+}
 }

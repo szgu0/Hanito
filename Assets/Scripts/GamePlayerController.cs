@@ -20,6 +20,8 @@ namespace StarterAssets
         public ThirdPersonController thirdPersonController;
 
         public DeerController deerController;
+        public AudioSource m_MyAudioSource;
+
 
         void Start()
         {
@@ -48,6 +50,7 @@ namespace StarterAssets
                 {
                     currentLight.GoodLight();
                     deerController.GoodLightOn();
+                    m_MyAudioSource.PlayOneShot(m_MyAudioSource.clip);
                 }
                 else if (currentLight.tag == "BadLight")
                 {
