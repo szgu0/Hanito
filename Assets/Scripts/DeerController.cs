@@ -54,7 +54,7 @@ namespace StarterAssets
                 agent.Warp(new Vector3(14.4f, 3.5f, -0.8f));
                 transform.rotation = Quaternion.Euler(0, 90, 0);
                 firstTimehasing = false;
-                Debug.Log("船");
+                //Debug.Log("船");
                 // 保存当前 Follow 对象并移除
                 originalFollow = virtualCamera.Follow;
                 virtualCamera.Follow = null;
@@ -63,7 +63,7 @@ namespace StarterAssets
                 elapsedTime = 0f;
             }
             else if (distanceToPlayer > 10f) agent.Warp(player.position + new Vector3(-8f, 0, 0f));
-            Debug.Log(player.position + new Vector3(-8f, 0, 0f));
+            //Debug.Log(player.position + new Vector3(-8f, 0, 0f));
         }
 
         void Update()

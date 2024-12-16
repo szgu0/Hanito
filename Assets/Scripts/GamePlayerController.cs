@@ -21,6 +21,13 @@ namespace StarterAssets
 
         public DeerController deerController;
         public AudioSource m_MyAudioSource;
+        public AudioClip[] m_MyAudioSources;
+        public Transform BarImageTrans;
+        public Transform TargetBarImageTrans;
+        public Image cooldown;
+        public float CooldownTime = 5;
+        public float CooldownLastTime = 5;
+        public GameObject OnCooldown;
 
 
         void Start()
@@ -35,6 +42,47 @@ namespace StarterAssets
         void Update()
         {
             InteractWithLight();
+            TargetBarImageTrans.position = BarImageTrans.position;
+        }
+
+        void FixedUpdate()
+        {
+            if (thirdPersonController._input.sprint)
+            {
+                if (CooldownLastTime > 0)
+                {
+                    CooldownLastTime -= 1f * Time.deltaTime;
+                    
+                }
+                else
+                {
+                    thirdPersonController.isCooldown = true;
+                    if (!m_MyAudioSource.isPlaying)
+                    {
+                        m_MyAudioSource.clip = m_MyAudioSources[0];
+                        m_MyAudioSource.Play();
+                        cooldown.color = Color.red;
+                        OnCooldown.SetActive(true);
+                    }
+                }
+            }
+            else
+            {
+                if (CooldownLastTime < CooldownTime)
+                {
+                    CooldownLastTime += 0.7f * Time.deltaTime;
+
+                    if (CooldownLastTime / CooldownTime > 0.3f)
+                    {
+                         m_MyAudioSource.Stop();
+                         cooldown.color = Color.white;
+                         thirdPersonController.isCooldown = false;
+                         OnCooldown.SetActive(false);
+                    }
+                }
+            }
+            cooldown.fillAmount = CooldownLastTime / CooldownTime;
+
         }
 
         private void InteractWithLight()
@@ -50,7 +98,7 @@ namespace StarterAssets
                 {
                     currentLight.GoodLight();
                     deerController.GoodLightOn();
-                    m_MyAudioSource.PlayOneShot(m_MyAudioSource.clip);
+                    m_MyAudioSource.PlayOneShot(m_MyAudioSources[1]);
                 }
                 else if (currentLight.tag == "BadLight")
                 {

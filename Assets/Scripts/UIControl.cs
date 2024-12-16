@@ -48,7 +48,7 @@ public class UIControl : MonoBehaviour
         {
             NotRepeat = true;
         }
-        Debug.Log(verticalInput);
+        //Debug.Log(verticalInput);
 
         // 檢測選擇按鍵
         if (Input.GetKeyDown(KeyCode.J) || m_GoodAction.triggered)
