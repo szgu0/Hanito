@@ -15,6 +15,8 @@ namespace StarterAssets
         public Material newMaterial; // 新材質
         public GameObject objectToActivate; // 要啟動的另一個物件
         public GameObject objectToNotActivate; // 要啟動的另一個物件
+        public Transform LayTransform;
+
 
 
         void Start()

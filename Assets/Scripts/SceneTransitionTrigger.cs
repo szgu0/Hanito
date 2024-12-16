@@ -11,7 +11,7 @@ public class SceneTransitionTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // 切换到目标场景
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(0);
         }
     }
 }

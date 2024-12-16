@@ -24,6 +24,7 @@ namespace StarterAssets
         public GameObject EatImage;
 
         private bool firstTimehasing = true;
+        private bool firstTimehasingend = true;
 
         public CinemachineVirtualCamera virtualCamera; // 绑定你的虚拟摄像机
         public float lerpDuration = 1.2f; // 移动时间
@@ -32,6 +33,9 @@ namespace StarterAssets
         private float elapsedTime = 0f;
         private Vector3 startPosition;
         private Transform originalFollow; // 保存原始的 Follow 对象
+
+        public Vector3 endPosition;
+        public bool isendPosition;
 
 
 
@@ -43,9 +47,9 @@ namespace StarterAssets
             SetRandomPatrolTarget();
         }
 
-        public void GoodLightOn()
+        public void GoodLightOn(Transform LayTransform)
         {
-
+            isW = false;
             StartChasing();
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             agent.SetDestination(player.position);
@@ -62,7 +66,16 @@ namespace StarterAssets
                 isLerping = true;
                 elapsedTime = 0f;
             }
-            else if (distanceToPlayer > 10f) agent.Warp(player.position + new Vector3(-8f, 0, 0f));
+            else if (distanceToPlayer > 10f) agent.Warp(player.position + new Vector3(-12f, 0, 0f));
+            if(LayTransform != null)
+            {
+                endPosition = LayTransform.position;
+                isendPosition = true;
+            }
+            else
+            {
+                isendPosition = false;
+            }
             //Debug.Log(player.position + new Vector3(-8f, 0, 0f));
         }
 
@@ -74,7 +87,7 @@ namespace StarterAssets
             {
                 if (isW)
                 {
-                    if (agent.remainingDistance < 0.5f)
+                    if (agent.remainingDistance < 0.5f && distanceToPlayer > 20f)
                     {
                         StopChasing();
                         SetRandomPatrolTarget();
@@ -119,7 +132,7 @@ namespace StarterAssets
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player")&&!isW)
             {
                 GamePlayerController player = other.GetComponent<GamePlayerController>();
                 if (player != null)
@@ -149,10 +162,19 @@ namespace StarterAssets
         {
             // 计算玩家与鹿的相对方向向量
             // Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Vector3 directionToPlayer = new Vector3(0, 0, 1f);
+            Vector3 directionToPlayer = new Vector3(1f, 0f, 0.2f);
 
             // 延伸出目标点
-            Vector3 extendedPoint = transform.position + directionToPlayer * 35f;
+            Vector3 extendedPoint = transform.position + directionToPlayer * 70f;
+            if(firstTimehasingend)
+            {
+                firstTimehasingend = false;
+                extendedPoint = new Vector3(234.2f,26.0f,58.4f);
+            }
+            if(isendPosition)
+            {
+                extendedPoint = endPosition;
+            }
 
             // 设置 NavMeshAgent 移动到目标点
             StartChasing();

@@ -97,8 +97,16 @@ namespace StarterAssets
                 else if (currentLight.tag == "GoodLight")
                 {
                     currentLight.GoodLight();
-                    deerController.GoodLightOn();
+                    if(currentLight.LayTransform!=null)
+                    {
+                        deerController.GoodLightOn(currentLight.LayTransform);
+                    }
+                    else
+                    {
+                        deerController.GoodLightOn(null);
+                    }
                     m_MyAudioSource.PlayOneShot(m_MyAudioSources[1]);
+                    
                 }
                 else if (currentLight.tag == "BadLight")
                 {
