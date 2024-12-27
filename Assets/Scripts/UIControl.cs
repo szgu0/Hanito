@@ -17,7 +17,7 @@ namespace StarterAssets
         public InputAction m_GoodAction;
         public InputAction m_EscAction;
 
-        private bool NotRepeat;
+        public bool NotRepeat;
 
         public GameObject Menu;
 
@@ -49,15 +49,16 @@ namespace StarterAssets
 
             if (NotRepeat && Mathf.Abs(verticalInput) > 0.7f)
             {
+                NotRepeat = false;
                 if (verticalInput > 0) Navigate(-1); // 向上移動
                 else if (verticalInput < 0) Navigate(1); // 向下移動
-                NotRepeat = false;
+                
             }
-            else
+            else if(Mathf.Abs(verticalInput) < 0.7f)
             {
                 NotRepeat = true;
             }
-            //Debug.Log(verticalInput);
+            
 
 
         }
@@ -66,7 +67,11 @@ namespace StarterAssets
             // 檢測選擇按鍵
             if (Input.GetKeyDown(KeyCode.J) || m_GoodAction.triggered)
             {
-                buttons[currentIndex].onClick.Invoke(); // 觸發按鈕點擊事件
+                if(Menu.activeSelf)
+                {
+                    buttons[currentIndex].onClick.Invoke(); // 觸發按鈕點擊事件
+                }
+                
             }
 
             if (Input.GetKeyDown(KeyCode.Escape) || m_EscAction.triggered)
