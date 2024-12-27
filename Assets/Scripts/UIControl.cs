@@ -90,6 +90,7 @@ namespace StarterAssets
             else if (currentIndex >= buttons.Length) currentIndex = 0;
 
             SelectButton(currentIndex);
+            
         }
 
         void SelectButton(int index)
