@@ -29,6 +29,8 @@ namespace StarterAssets
         public float CooldownLastTime = 5;
         public GameObject OnCooldown;
 
+        public GameObject EatImage;
+
 
         void Start()
         {
@@ -83,6 +85,11 @@ namespace StarterAssets
             }
             cooldown.fillAmount = CooldownLastTime / CooldownTime;
 
+            if(transform.position.y<-20)
+            {
+                EatImage.SetActive(true);
+            }
+
         }
 
         private void InteractWithLight()
@@ -105,6 +112,7 @@ namespace StarterAssets
                     {
                         deerController.GoodLightOn(null);
                     }
+                    m_MyAudioSource.Stop();
                     m_MyAudioSource.PlayOneShot(m_MyAudioSources[1]);
                     
                 }

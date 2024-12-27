@@ -36,6 +36,7 @@ namespace StarterAssets
 
         public Vector3 endPosition;
         public bool isendPosition;
+        public AudioSource m_MyAudioSource;
 
 
 
@@ -187,6 +188,7 @@ namespace StarterAssets
             isChasing = true;
             agent.speed = runSpeed;
             animator.SetBool("IsChasing", true); // 切换到奔跑动画
+            m_MyAudioSource.Play();
         }
 
         void StopChasing()
@@ -194,6 +196,7 @@ namespace StarterAssets
             isChasing = false;
             agent.speed = walkSpeed;
             animator.SetBool("IsChasing", false); // 切换到行走动画
+            m_MyAudioSource.Stop();
         }
 
         void StartEating()
